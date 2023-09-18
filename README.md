@@ -27,7 +27,7 @@ app.get('/buscarCEP/:cep', async (req, res) => {
   const API2 = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
   
   // Verificar qual API respondeu primeiro
-  const resposta = await Promise.race([API1.json(), API2.json()]);
+  const resposta = await Promise.any([API1.json(), API2.json()]);
 
   // Registrar no banco de dados local
   // (Esta etapa será abordada posteriormente)
@@ -69,11 +69,14 @@ app.get('/buscarCEP/:cep', async (req, res) => {
   const API1 = await fetch(`https://cep.awesomeapi.com.br/json/${cep}`);
   const API2 = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
   
+  
   // Verificar qual API respondeu primeiro
   const resposta = await Promise.race([API1.json(), API2.json()]);
 
+
   // Registrar no banco de dados local
   inserirResultadoNoDB(cep, resposta);
+
   
   // Enviar resposta ao cliente
   res.json(resposta);
@@ -130,3 +133,7 @@ Os resultados das requisições são armazenados no banco de dados local para co
 Use os endpoints mencionados acima para testar o projeto e visualizar os resultados.
 Você pode personalizar o projeto adicionando mais funcionalidades, como autenticação de usuários ou consultas mais avançadas ao banco de dados.
 Este é um projeto básico que pode ser expandido e personalizado conforme necessário. Boa sorte!
+
+
+Example of package.json with good meta data:
+
